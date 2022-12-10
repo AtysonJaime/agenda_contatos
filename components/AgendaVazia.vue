@@ -26,7 +26,7 @@ export default {
 .agenda-vazia {
   display: flex;
   justify-content: center;
-  align-content: center;
+  align-items: center;
   padding: 6rem;
 
   .content {

@@ -2,7 +2,7 @@
   nav.navbar.header(role='navigation' aria-label='main navigation')
       .navbar-brand
         a.navbar-item(href='/')
-          img(src='~/assets/ic-logo.svg' alt='Logo')
+          img(:src='imagem' alt='Logo')
         ModalCriarContato(v-if='agenda.length > 0')
         .navbar-busca
           .field
@@ -23,15 +23,16 @@ export default {
   data() {
     return {
       buscar: '',
+      imagem: require('~/assets/ic-logo.svg'),
     }
+  },
+  computed: {
+    ...mapState('contatos', ['agenda']),
   },
   methods: {
     search() {
       this.$emit('search', this.buscar)
     },
-  },
-  computed: {
-    ...mapState('contatos', ['agenda']),
   },
 }
 </script>

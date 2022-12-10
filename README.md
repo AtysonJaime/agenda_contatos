@@ -5,7 +5,7 @@
 
 > ![Logo](./assets/ic-logo%402x.png)
 >
-> Sistema de cadastramento de contatos estilo uma agenda, com e-mail, telefone e nome. Possibilitando a edição, exclusão e cadastro de novos contatos. Projeto desenvolvido utilizando Vue.js.
+> 📒 Sistema de cadastramento de contatos estilo uma agenda, com e-mail, telefone e nome. Possibilitando a edição, exclusão e cadastro de novos contatos. Projeto desenvolvido utilizando Vue.js.
 
 ---
 

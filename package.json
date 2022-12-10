@@ -19,8 +19,8 @@
     "nuxt-buefy": "^0.4.24",
     "pug": "^3.0.2",
     "pug-plain-loader": "^1.1.0",
-    "sass": "^1.56.2",
-    "sass-loader": "^13.2.0",
+    "sass": "^1.56.1",
+    "sass-loader": "^10.1.1",
     "vue": "^2.7.10",
     "vue-server-renderer": "^2.7.10",
     "vue-template-compiler": "^2.7.10"

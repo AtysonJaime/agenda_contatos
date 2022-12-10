@@ -1,5 +1,8 @@
 <template lang="pug">
+div.content-body
+  HeaderPage(@search='changeBuscaValue')
   section.section
+    AgendaVazia(v-if='agenda.length === 0')
   //- <section class="section">
   //-   <div class="columns is-mobile">
   //-     <card title="Free" icon="github">
@@ -23,16 +26,34 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+import HeaderPage from '~/components/HeaderPage.vue'
+import AgendaVazia from '~/components/AgendaVazia.vue'
+
 export default {
   name: 'IndexPage',
-  props: {
-    searchValue: {
-      type: String,
-      required: true,
-      default: '',
+  components: {
+    HeaderPage,
+    AgendaVazia,
+  },
+  data() {
+    return {
+      inputBusca: '',
+    }
+  },
+  computed: {
+    ...mapState('contatos', ['agenda']),
+  },
+  methods: {
+    changeBuscaValue(e) {
+      this.inputBusca = e
     },
   },
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+@import './assets/sass/variable.scss';
+.section {
+}
+</style>

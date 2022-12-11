@@ -4,7 +4,7 @@ div.content-body
   section.section
     LoadingPage(v-if='isLoading')
     AgendaVazia(v-else-if='agenda.length === 0')
-    TabelaContatos(v-else :contatos='agenda')
+    TabelaContatos(v-else :contatos='buscaContatoTabela')
 </template>
 
 <script>
@@ -30,6 +30,11 @@ export default {
   },
   computed: {
     ...mapState('contatos', ['agenda']),
+    buscaContatoTabela() {
+      return this.agenda.filter((contato) =>
+        contato.nome.toLowerCase().includes(this.inputBusca.toLowerCase())
+      )
+    },
   },
   async mounted() {
     await this.$store.dispatch('contatos/setContatos').then(() => {

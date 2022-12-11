@@ -7,7 +7,7 @@
         .navbar-busca
           .field
             p.control.has-icons-right
-              input.input.input-busca(type='text' placeholder='Buscar...' v-model='buscar' @keydown.enter='search')
+              input.input.input-busca(type='text' placeholder='Buscar...' v-model='buscar' @keyup='search' :disabled='agenda.length === 0')
               span.icon.is-right.is-clickable(@click='search')
                 i.mdi.mdi-magnify.mdi-24px
 </template>

@@ -108,15 +108,14 @@ export default {
         this.error.email === '' &&
         this.error.telefone === ''
       )
-        console.log(this.contato)
-      await this.$store
-        .dispatch('contatos/editaContato', {
-          identificador: this.agenda.id,
-          data: this.contato,
-        })
-        .then(() => {
-          this.closeModal()
-        })
+        await this.$store
+          .dispatch('contatos/editaContato', {
+            identificador: this.agenda.id,
+            data: this.contato,
+          })
+          .then(() => {
+            this.closeModal()
+          })
     },
   },
 }

@@ -2,7 +2,7 @@
   nav.navbar.header(role='navigation' aria-label='main navigation')
       .navbar-brand
         a.navbar-item(href='/')
-          img(:src='imagem' alt='Logo')
+          b-image(:src='imagem' alt='Logo')
         ModalCriarContato(v-if='agenda.length > 0')
         .navbar-busca
           .field

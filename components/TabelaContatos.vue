@@ -32,7 +32,7 @@
                                     p {{item.telefone}}
                             td
                                 .content.content-actions
-                                    ModalEditarContato(:agenda='item')
+                                    ModalEditarContato(:contatoEspecifico='item')
                                     ModalExcluirContato(:agenda='item')
 </template>
 

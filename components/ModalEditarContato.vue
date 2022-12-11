@@ -8,19 +8,20 @@
           .card-header
             p.card-header.title Editar contato
           .card-content
-            FieldInput(label='Nome' inputType='text' :error='error.nome' @vmodel='changeValue' :valueInput='agenda.nome')
-            FieldInput(label='E-mail' inputType='email' :error='error.email' @vmodel='changeValue' :valueInput='agenda.email')
-            FieldInput.inputTelefone(label='Telefone' inputType='tel' :error='error.telefone' @vmodel='changeValue' :valueInput='agenda.telefone' :mascara="['(##) #####-####','(##) ####-####']")
+            FieldInput(label='Nome' inputType='text' :error='error.nome' @vmodel='changeValue' :valueInput='contatoEspecifico.nome')
+            FieldInput(label='E-mail' inputType='email' :error='error.email' @vmodel='changeValue' :valueInput='contatoEspecifico.email')
+            FieldInput.inputTelefone(label='Telefone' inputType='tel' :error='error.telefone' @vmodel='changeValue' :valueInput='contatoEspecifico.telefone' :mascara="['(##) #####-####','(##) ####-####']")
           .card-footer
             button.button.button-link(type='button' @click='closeModal()') Cancelar
             button.button.button-modal-action(type='button' @click='editaContato()' :disabled='isDisabled') Salvar
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import FieldInput from './FieldInput.vue'
 export default {
   props: {
-    agenda: {
+    contatoEspecifico: {
       type: [Array, Object],
       require: true,
       default: () => [],
@@ -40,10 +41,13 @@ export default {
         email: '',
         telefone: '',
       },
+      emailAntigo: '',
+      telefoneAntigo: '',
     }
   },
 
   computed: {
+    ...mapState('contatos', ['agenda']),
     isDisabled() {
       return (
         this.contato.nome === '' &&
@@ -54,9 +58,9 @@ export default {
   },
 
   mounted() {
-    this.contato.nome = this.agenda.nome
-    this.contato.email = this.agenda.email
-    this.contato.telefone = this.agenda.telefone
+    this.contato.nome = this.contatoEspecifico.nome
+    this.contato.email = this.contatoEspecifico.email
+    this.contato.telefone = this.contatoEspecifico.telefone
   },
 
   component: {
@@ -89,8 +93,17 @@ export default {
     },
 
     validaInputTelefone() {
+      const filtradoIgual = this.agenda.filter(
+        (item) => item.telefone === this.contato.telefone
+      )
       if (this.contato.telefone.length < 14) {
         this.error.telefone = 'Adicione um telefone valido'
+      } else if (filtradoIgual.length > 0) {
+        if (filtradoIgual[0].telefone !== this.contatoEspecifico.telefone) {
+          this.error.telefone = 'Telefone já cadastrado para um outro contato'
+        } else {
+          this.error.telefone = ''
+        }
       } else {
         this.error.telefone = ''
       }
@@ -110,7 +123,7 @@ export default {
       )
         await this.$store
           .dispatch('contatos/editaContato', {
-            identificador: this.agenda.id,
+            identificador: this.contatoEspecifico.id,
             data: this.contato,
           })
           .then(() => {

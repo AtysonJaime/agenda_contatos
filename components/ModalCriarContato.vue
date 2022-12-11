@@ -18,6 +18,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import FieldInput from './FieldInput.vue'
 export default {
   data() {
@@ -37,6 +38,7 @@ export default {
   },
 
   computed: {
+    ...mapState('contatos', ['agenda']),
     isDisabled() {
       return (
         this.contato.nome === '' &&
@@ -79,8 +81,13 @@ export default {
     },
 
     validaInputTelefone() {
+      const filtradoIgual = this.agenda.filter(
+        (item) => item.telefone === this.contato.telefone
+      )
       if (this.contato.telefone.length < 14) {
         this.error.telefone = 'Adicione um telefone valido'
+      } else if (filtradoIgual.length > 0) {
+        this.error.telefone = 'Telefone já cadastrado para um outro contato'
       } else {
         this.error.telefone = ''
       }

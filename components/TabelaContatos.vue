@@ -14,7 +14,7 @@
                         th
                             .content
                                 p Telefone
-                        th.coluna-latter
+                        th.coluna-actions
                 tbody
                     template(v-for="item in contatos")
                         tr(:class='{"is-selected":item.active}' :key="item.id")
@@ -60,7 +60,7 @@ export default {
 }
 
 .table-container {
-  min-width: 31.25rem;
+  min-width: 37.5rem;
   border: 0.0625rem solid #e1e1e1;
   border-radius: 0.25rem;
 }
@@ -100,6 +100,9 @@ export default {
       &.coluna-latter {
         width: 3.125rem;
       }
+      &.coluna-actions {
+        width: 5rem;
+      }
     }
   }
 
@@ -121,7 +124,7 @@ export default {
       }
       .content-actions {
         display: flex;
-        justify-content: center;
+        justify-content: space-around;
         align-items: center;
         height: 2.5rem;
       }

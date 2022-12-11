@@ -14,7 +14,7 @@
             FieldInput.inputTelefone(label='Telefone' inputType='tel' :error='error.telefone' @vmodel='changeValue' :mascara="['(##) #####-####','(##) ####-####']")
           .card-footer
             button.button.button-link(type='button' @click='closeModal()') Cancelar
-            button.button.button-save(type='button' @click='saveContato()' :disabled='isDisabled') Salvar
+            button.button.button-modal-action(type='button' @click='saveContato()' :disabled='isDisabled') Salvar
 </template>
 
 <script>
@@ -195,7 +195,7 @@ export default {
         }
       }
 
-      .button-save {
+      .button-modal-action {
         border-radius: 1rem;
         padding: 0.5rem 1rem;
         margin: 0;

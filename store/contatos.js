@@ -32,6 +32,8 @@ export const mutations = {
     state.agenda[index].nome = payload.data.nome
     state.agenda[index].email = payload.data.email
     state.agenda[index].telefone = payload.data.telefone
+    state.agenda[index].primeiraLetra =
+      payload.data.nome !== '' ? payload.data.nome.charAt(0).toUpperCase() : ''
     localStorage.setItem('agenda', JSON.stringify(state.agenda))
   },
 }

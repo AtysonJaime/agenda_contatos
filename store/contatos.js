@@ -8,9 +8,12 @@ export const mutations = {
     state.agenda.push(payload)
     localStorage.setItem('agenda', JSON.stringify(state.agenda))
   },
-  ADD_QUANTIDADE(state, payload) {
-    state.quantidadeItensAgenda = payload
-    localStorage.setItem('quantidadeItensAgenda', payload)
+  SET_CONTATO(state, payload) {
+    state.agenda = payload
+  },
+  EXCLUIR_CONTATO(state, payload) {
+    state.agenda = payload
+    localStorage.setItem('agenda', JSON.stringify(state.agenda))
   },
   CHANGE_ACTIVE(state, payload) {
     const indexAtivo = state.agenda.findIndex(
@@ -19,19 +22,12 @@ export const mutations = {
     state.agenda[indexAtivo].active = false
     localStorage.setItem('agenda', JSON.stringify(state.agenda))
   },
-  SET_CONTATO(state, payload) {
-    state.agenda = payload
-  },
-  SET_QUANTIDADE(state, payload) {
-    state.quantidadeItensAgenda = payload
-  },
 }
 
 export const actions = {
-  addContato({ state, commit }, data) {
-    const id = state.quantidadeItensAgenda
+  addContato({ commit }, data) {
     const contato = {
-      id,
+      id: new Date().getTime(),
       nome: data.nome,
       active: true,
       email: data.email,
@@ -39,18 +35,18 @@ export const actions = {
       primeiraLetra: data.nome !== '' ? data.nome.charAt(0).toUpperCase() : '',
     }
     setTimeout(() => {
-      const takeId = id
-      commit('CHANGE_ACTIVE', takeId)
+      commit('CHANGE_ACTIVE', contato.id)
     }, 10000)
     commit('ADD_CONTATO', contato)
-    commit('ADD_QUANTIDADE', id + 1)
   },
   setContatos({ commit }) {
     const agenda = JSON.parse(localStorage.getItem('agenda') || '[]')
-    const quantidade = localStorage.getItem('quantidadeItensAgenda')
-      ? localStorage.getItem('quantidadeItensAgenda')
-      : 1
     commit('SET_CONTATO', agenda)
-    commit('SET_QUANTIDADE', quantidade)
+  },
+  excluirContato({ state, commit }, identificador) {
+    const filtrado = state.agenda.filter(
+      (contato) => contato.id !== identificador
+    )
+    commit('EXCLUIR_CONTATO', filtrado)
   },
 }

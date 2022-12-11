@@ -65,7 +65,7 @@ export default {
 
   methods: {
     clearAll() {
-      this.error.name = ''
+      this.error.nome = ''
       this.error.email = ''
       this.error.telefone = ''
     },

@@ -52,10 +52,10 @@ export default {
 
   methods: {
     clearAll() {
-      this.contato.name = ''
+      this.contato.nome = ''
       this.contato.email = ''
       this.contato.telefone = ''
-      this.error.name = ''
+      this.error.nome = ''
       this.error.email = ''
       this.error.telefone = ''
     },

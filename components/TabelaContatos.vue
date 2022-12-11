@@ -61,6 +61,8 @@ export default {
 
 .table-container {
   min-width: 31.25rem;
+  border: 0.0625rem solid #e1e1e1;
+  border-radius: 0.25rem;
 }
 
 .content {
@@ -82,7 +84,6 @@ export default {
 }
 
 .table {
-  border: 0.0625rem solid $white;
   background-color: $white-two;
 
   tr {
@@ -127,10 +128,13 @@ export default {
     }
   }
 
-  th,
-  td {
+  th {
     border: 0.0625rem solid $white !important;
     border-width: 0 0 0.0625rem !important;
+  }
+  td {
+    border: 0.0625rem solid $white !important;
+    border-width: 0.0625rem 0 0 !important;
   }
 }
 </style>

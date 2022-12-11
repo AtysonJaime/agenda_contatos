@@ -32,16 +32,19 @@
                                     p {{item.telefone}}
                             td
                                 .content.content-actions
+                                    ModalEditarContato(:agenda='item')
                                     ModalExcluirContato(:agenda='item')
 </template>
 
 <script>
 import AvatarColorido from './AvatarColorido.vue'
 import ModalExcluirContato from './ModalExcluirContato.vue'
+import ModalEditarContato from './ModalEditarContato.vue'
 export default {
   components: {
     AvatarColorido,
     ModalExcluirContato,
+    ModalEditarContato,
   },
   props: {
     contatos: {

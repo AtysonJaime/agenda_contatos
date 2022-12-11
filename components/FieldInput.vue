@@ -59,11 +59,22 @@ export default {
       required: false,
       default: false,
     },
+    valueInput: {
+      type: String,
+      required: false,
+      default: '',
+    },
   },
 
   data() {
     return {
       value: '',
+    }
+  },
+
+  mounted() {
+    if (this.valueInput !== '') {
+      this.value = this.valueInput
     }
   },
 

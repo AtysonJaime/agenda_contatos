@@ -1,28 +1,35 @@
 <template lang="pug">
 .modal-cria-contato
-    button.button.openModal(type='button' @click='isModalCriaContatoActive = true')
+    button.button.button-icon(type='button' @click='isModalEditaContato = true' title='Editar contato' aria-label='Editar contato')
         span.icon
-            i.mdi.mdi-plus
-        span Criar contato
-    b-modal(v-model='isModalCriaContatoActive' @close='clearAll')
+            i.mdi.mdi-pencil
+    b-modal(v-model='isModalEditaContato' @close='clearAll')
         .card
           .card-header
-            p.card-header.title Criar novo contato
+            p.card-header.title Editar contato
           .card-content
-            FieldInput(label='Nome' inputType='text' :error='error.nome' @vmodel='changeValue')
-            FieldInput(label='E-mail' inputType='email' :error='error.email' @vmodel='changeValue')
-            FieldInput.inputTelefone(label='Telefone' inputType='tel' :error='error.telefone' @vmodel='changeValue' :mascara="['(##) #####-####','(##) ####-####']")
+            FieldInput(label='Nome' inputType='text' :error='error.nome' @vmodel='changeValue' :valueInput='agenda.nome')
+            FieldInput(label='E-mail' inputType='email' :error='error.email' @vmodel='changeValue' :valueInput='agenda.email')
+            FieldInput.inputTelefone(label='Telefone' inputType='tel' :error='error.telefone' @vmodel='changeValue' :valueInput='agenda.telefone' :mascara="['(##) #####-####','(##) ####-####']")
           .card-footer
             button.button.button-link(type='button' @click='closeModal()') Cancelar
-            button.button.button-modal-action(type='button' @click='saveContato()' :disabled='isDisabled') Salvar
+            button.button.button-modal-action(type='button' @click='editaContato()' :disabled='isDisabled') Salvar
 </template>
 
 <script>
 import FieldInput from './FieldInput.vue'
 export default {
+  props: {
+    agenda: {
+      type: [Array, Object],
+      require: true,
+      default: () => [],
+    },
+  },
+
   data() {
     return {
-      isModalCriaContatoActive: false,
+      isModalEditaContato: false,
       contato: {
         nome: '',
         email: '',
@@ -46,15 +53,18 @@ export default {
     },
   },
 
+  mounted() {
+    this.contato.nome = this.agenda.nome
+    this.contato.email = this.agenda.email
+    this.contato.telefone = this.agenda.telefone
+  },
+
   component: {
     FieldInput,
   },
 
   methods: {
     clearAll() {
-      this.contato.name = ''
-      this.contato.email = ''
-      this.contato.telefone = ''
       this.error.name = ''
       this.error.email = ''
       this.error.telefone = ''
@@ -62,7 +72,7 @@ export default {
 
     closeModal() {
       this.clearAll()
-      this.isModalCriaContatoActive = false
+      this.isModalEditaContato = false
     },
 
     changeValue(e) {
@@ -86,7 +96,7 @@ export default {
       }
     },
 
-    async saveContato() {
+    async editaContato() {
       if (this.contato.email !== '') {
         this.validaInputEmail()
       }
@@ -98,11 +108,15 @@ export default {
         this.error.email === '' &&
         this.error.telefone === ''
       )
-        await this.$store
-          .dispatch('contatos/addContato', this.contato)
-          .then(() => {
-            this.closeModal()
-          })
+        console.log(this.contato)
+      await this.$store
+        .dispatch('contatos/editaContato', {
+          identificador: this.agenda.id,
+          data: this.contato,
+        })
+        .then(() => {
+          this.closeModal()
+        })
     },
   },
 }
@@ -115,27 +129,22 @@ export default {
   display: flex;
   justify-content: center;
 
-  .openModal {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: $light-red;
-    width: 9rem;
-    height: 2.5rem;
-    background-color: $light-yellowish-green;
-    border-radius: 20px;
+  .button-icon {
+    padding: 0;
+    margin: 0;
     border: 0;
+    background-color: transparent;
 
-    .icon {
-      margin-right: 0.3125rem;
-    }
     i {
-      font-size: 2rem;
+      color: $bluey-grey;
     }
 
     &:hover,
     &:focus {
-      background-color: $light-yellowish-green-hover;
+      box-shadow: 0;
+      i {
+        color: #52555e;
+      }
     }
   }
 
